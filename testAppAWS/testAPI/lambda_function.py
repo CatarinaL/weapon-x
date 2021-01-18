@@ -1,6 +1,9 @@
 import boto3
 import json
 import os
+import time
+import re
+from enum import Enum
 
 print('Loading function')
 dynamo = boto3.client('dynamodb')
@@ -13,7 +16,59 @@ OPERATIONS = {
     'PUT': lambda dynamo, x: dynamo.update_item(**x),
 }
 
+class LogStatus(Enum):
+    ERROR = 1
+    OK = 0
 
+def analysis_handler(input_str, application):
+    line = read_log(input_str)
+    if line:
+        status = log_status(line)
+        if status in (LogStatus.ERROR,):
+            result = persist_result(line, status, application)
+            return f"Persisted {line} of application {application}. Operation result: {result}"
+        return "Log not persisted"
+    return "Unable to parse log"
+
+def persist_result(line, status, application):
+    #upsert to DB
+    payload = {
+         "Item": {
+            "application": {
+                "S": application
+            },
+            "logID": {
+                "S": (application + "_" + str(time.time()))
+            },
+            "message": {
+                "S": line
+            },
+            "status": {
+                "S": str(status)
+            }
+        },
+        "TableName": "testDB" #TODO
+    }
+    return get_operations()["POST"](dynamo, payload)
+
+def log_status(line):
+    """
+    analyses content of valid log line
+    returns LogStatus result
+    v1: use regex
+    """
+    error = re.compile(r"ERROR\W")
+    print(error.search(line))
+    if error.search(line):
+        return LogStatus.ERROR
+    return LogStatus.OK
+
+def read_log(input_str):
+    #clean "empty" lines - whitesapces, tabs, etc
+    #handle IO exception
+    #return line in the correct format for analysis 
+    line = input_str
+    return line
 
 def respond(err, res=None):
     return {
@@ -33,7 +88,7 @@ def get_verb(event):
 
 
 def get_operations():
-    if not os.environ.get("executelocal"):
+    if "true" != os.environ.get("executelocal", "false").lower():
         return OPERATIONS
     return {
         'GET': lambda dynamo, x: {
@@ -83,11 +138,16 @@ def lambda_handler(event, context):
     '''
     print("Received Event: " + json.dumps(event, indent=2))
 
-    
     verb = get_verb(event)
     operations = get_operations()
     if verb in operations:
         payload = event['queryStringParameters'] if verb == 'GET' else json.loads(event['body'])
+
+        if verb == "POST":
+            print(f"Received POST with payload: {payload}")
+            result = analysis_handler(payload["log"], payload["application"])
+            print("Result: " + result)
+            return respond(None, result)
 
         result = operations[verb](dynamo, payload)
         return respond(None, result)
