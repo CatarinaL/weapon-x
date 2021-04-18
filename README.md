@@ -1,19 +1,39 @@
 # weapon-x
 Log analysis - ML pipeline - TU Dublin BSc Business Analytics final year project 2020
 
+## App
+
+* 
+* Log ingestion: line by line (to support stream) or bulk (for batch processing)
+* Log parsing: regex to split log blocks. The log message is further parsed using the Spell algorithm, based on the implementation by _inoue.tomoya_ at https://github.com/bave/pyspell
+* TODO/WIP: anomaly detection model, log classification model, user interface
+
+### Local development
+
+* Clone repo and from the project root folder spin up docker container to run the Flask application using:
+```
+docker-compose up
+```
+
+## Endpoints
+
+
+
 ## Dynamo DB
 No-SQL key-value database available in the AWS ecosystem.
 
-### Create a table for test app
+***AWS proof of concept for next phase of the project, so it's still separated from rest of logic***
+
+### Create a table for test AWS app
 Table name:	testDB
 Primary partition key:	application (String)
 Primary sort key:	logID (String)
 
-## Test application
+## Test AWS application 
 A simple backend (read/write to DynamoDB) with a RESTful API endpoint using Amazon API Gateway. Based on the Lambda blueprint at https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway-blueprint.html
 Route was configured to accept ANY verb request to the base url; this can be done in API Gateway > Routes. The gateway-id is the one corresponding to the lambda integration - see Integration details for route.
 
-### Test: GET table contents
+### Test AWS app: GET table contents
 ```
 curl -X GET https://{gateway-id}.execute-api.eu-west-1.amazonaws.com/?TableName=testDB 
 ```
@@ -51,7 +71,7 @@ Sample response:
 ```
 Verify: should match state in DynamoDB > testDB > Items AWS console.
 
-### Test: POST item to database
+### Test AWS app: POST item to database
 ```
 curl -X POST https://{gateway-id}.execute-api.eu-west-1.amazonaws.com/ -H "Content-Type: application/json" --data-binary @- <<DATA
 { 
