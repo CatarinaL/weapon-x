@@ -1,0 +1,7 @@
+flask
+numpy==1.19.5
+tf-nightly
+pandas==1.1.5
+sklearn
+boto3
+flask-cors
