@@ -1,0 +1,17 @@
+version: '3' 
+services: 
+  web: 
+    build: . 
+    ports: 
+      - '5000:5000'
+    entrypoint:
+      - flask
+      - run
+      - --host=0.0.0.0
+    environment:
+      FLASK_DEBUG: "on"
+      FLASK_APP: ./app.py
+      AWS_PROFILE: default
+    volumes:
+      - ./app:/app
+      - ~/.aws/:/root/.aws:ro

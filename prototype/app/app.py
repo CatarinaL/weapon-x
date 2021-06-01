@@ -3,6 +3,8 @@ from pyspell import spell
 import json
 import re
 
+import csv
+
 
 app = Flask(__name__)
 slm = spell.lcsmap('[\\s]+')
@@ -40,11 +42,12 @@ def add_log():
 	log_data = log_data.strip('\n')
 	parsed_log = _parse_log(log_data)
 
-	# store_parsed_log_to_db(parsed_log)
+	# store_parsed_log_to_db(parsed_log) #TODO: not relational DB, just save csv file to bucket or something
+	#TODO: feature extraction step #TODO: save features to file
     # model_result = run_classifier_model(parsed_log)
 	# store_model_result_to_db(model_result)
 
-	# send "alert" when model result is error 
+	# MAYBE: TODO: send "alert" when model result is error 
 
 	return json.dumps(parsed_log)
 
@@ -65,6 +68,25 @@ def mappings():
 		slm = spell.lcsmap('[\\s]+')
 	return slm.tojson()
 
+
+@app.route('/csv', methods=["GET"])
+def mappings_csv():
+	# TODO: this is temporary, either remove or refactor into above route (/mappings/csv)
+	slm_json = json.loads(slm.tojson())
+
+	with open('parsed_logs.csv', 'w') as data_file:
+		# create the csv writer object
+		csv_writer = csv.writer(data_file)
+		
+		has_header = False
+		for _, entry in slm_json.items():
+			if not has_header:
+				# headers to the CSV file
+				csv_writer.writerow(entry.keys())
+				has_header = True
+			csv_writer.writerow(entry.values())
+	
+	return {"result": "you has file"}
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')

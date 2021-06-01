@@ -1,0 +1,25 @@
+lcsseq,lineids,postion
+org.apache.hadoop.metrics2.impl.MetricsConfig: loaded properties from hadoop-metrics2.properties ,[1],[]
+org.apache.hadoop.metrics2.impl.MetricsSystemImpl: Scheduled snapshot period at 10 second(s). ,[2],[]
+org.apache.hadoop.metrics2.impl.MetricsSystemImpl: MapTask metrics system started ,[3],[]
+org.apache.hadoop.mapred.YarnChild: Executing with tokens: ,[4],[]
+"org.apache.hadoop.mapred.YarnChild: Kind: mapreduce.job, Service: job_1445062781478_0011, Ident: (org.apache.hadoop.mapreduce.security.token.JobTokenIdentifier@6b7a5e49) ",[5],[]
+org.apache.hadoop.mapred.YarnChild: Sleeping for 0ms before retrying again. Got null now. ,[6],[]
+org.apache.hadoop.mapred.YarnChild: mapreduce.cluster.local.dir for child: /tmp/hadoop-msrabi/nm-local-dir/usercache/msrabi/appcache/application_1445062781478_0011 ,[7],[]
+"org.apache.hadoop.conf.Configuration.deprecation: session.id is deprecated. Instead, use dfs.metrics.session-id ",[8],[]
+org.apache.hadoop.yarn.util.ProcfsBasedProcessTree: ProcfsBasedProcessTree currently is supported only on Linux. ,[9],[]
+org.apache.hadoop.mapred.Task: Using ResourceCalculatorProcessTree : org.apache.hadoop.yarn.util.WindowsBasedProcessTree@2c93d898 ,[10],[]
+org.apache.hadoop.mapred.MapTask: Processing split: hdfs://msra-sa-41:9000/pageinput2.txt:536870912+134217728 ,[11],[]
+org.apache.hadoop.mapred.MapTask: (EQUATOR) * kvi * ,"[12, 21, 27, 33, 39, 45, 51, 57]","[2, 4]"
+org.apache.hadoop.mapred.MapTask: mapreduce.task.io.sort.mb: 100 ,[13],[]
+org.apache.hadoop.mapred.MapTask: soft limit at 83886080 ,[14],[]
+org.apache.hadoop.mapred.MapTask: bufstart = * bufvoid = * ,"[15, 19, 25, 31, 37, 43, 49, 55, 62]","[3, 6]"
+org.apache.hadoop.mapred.MapTask: kvstart = * length = * ,"[16, 20, 26, 32, 38, 44, 50, 56, 63]","[3, 6]"
+org.apache.hadoop.mapred.MapTask: * output ,"[17, 18, 24, 30, 36, 42, 48, 54]",[1]
+org.apache.hadoop.mapred.MapTask: Finished spill * ,"[22, 28, 34, 40, 46, 52, 58, 64]",[3]
+org.apache.hadoop.mapred.MapTask: (RESET) equator * kv * kvi * ,"[23, 29, 35, 41, 47, 53, 59]","[3, 5, 7]"
+org.apache.hadoop.mapred.MapTask: * map output ,"[60, 61]",[1]
+org.apache.hadoop.mapred.Merger: Merging 8 sorted segments ,[65],[]
+"org.apache.hadoop.mapred.Merger: Down to the last merge-pass, with 8 segments left of total size: 288330442 bytes ",[66],[]
+org.apache.hadoop.mapred.Task: Task:attempt_1445062781478_0011_m_000004_0 is done. And is in the process of committing ,[67],[]
+org.apache.hadoop.mapred.Task: Task 'attempt_1445062781478_0011_m_000004_0' done. ,[68],[]
