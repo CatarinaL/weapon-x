@@ -8,6 +8,10 @@ Log analysis - ML pipeline - TU Dublin BSc Business Analytics final year project
 * Log parsing: regex to split log blocks. The log message is further parsed using the Spell algorithm, based on the implementation by _inoue.tomoya_ at https://github.com/bave/pyspell
 * LSTM-based log classification model (Tensorflow)
 
+![app_logic_flow](https://user-images.githubusercontent.com/1586447/120364877-abd44480-c305-11eb-9a1b-bc91a5ba148f.png)
+
+![fyp_architecture](https://user-images.githubusercontent.com/1586447/120364956-c4445f00-c305-11eb-9259-32d5e29a2f8e.png)
+
 /frontend
 * Basic Next.js user interface
 
@@ -21,8 +25,22 @@ docker-compose up
 
 ## API Endpoints
 
+#### /predict_log/ \<filename>
+method: POST
+returns: JSON of predictions for sequences in file
+  
+#### /processed
+method: GET
+returns: JSON of database entries containing filename, predictions and model result
+  
+#### /processed/\<filename>
+method: POST
+returns: JSON of database entry corresponding to a file
 
-
+#### /mappings
+method: GET, DELETE
+returns: JSON containing Longest Common Subsequence map of extracted log templates (Spell algorithm)
+  
 ## Dynamo DB
 No-SQL key-value database available in the AWS ecosystem.
 
