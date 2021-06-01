@@ -1,28 +1,4 @@
-# weapon-x
-Log analysis - ML pipeline - TU Dublin BSc Business Analytics final year project 2020
-
-## App
-
-* 
-* Log ingestion: line by line (to support stream) or bulk (for batch processing)
-* Log parsing: regex to split log blocks. The log message is further parsed using the Spell algorithm, based on the implementation by _inoue.tomoya_ at https://github.com/bave/pyspell
-* TODO/WIP: anomaly detection model, log classification model, user interface
-
-### Local development
-
-* Clone repo and from the project root folder spin up docker container to run the Flask application using:
-```
-docker-compose up
-```
-
-## Endpoints
-
-
-
-## Dynamo DB
-No-SQL key-value database available in the AWS ecosystem.
-
-***AWS proof of concept for next phase of the project, so it's still separated from rest of logic***
+***AWS hosted proof of concept for initial stage of the project***
 
 ### Create a table for test AWS app
 Table name:	testDB
